@@ -129,3 +129,83 @@ button {
 .highlight {
     color: #6f00fc;
 }
+
+.scoreboard {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-color: #FFF;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 25px 50px rgb(33 33 33 / 25%);
+    max-width: 300px;
+}
+
+@media screen and (max-width: 768px) {
+    .scoreboard {
+        position: static;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.scoreboard h2 {
+    color: #282A3A;
+    font-size: 21pt;
+    margin-bottom: 10px;
+}
+
+.scoreboard ol {
+    padding-left: 20px;
+    margin: 0;
+    list-style: none;
+}
+
+.scoreboard li {
+    margin-bottom: 10px;
+    color: #757575;
+    font-size: 14pt;
+}
+
+.scoreboard li:first-child {
+    color: #6f00fc;
+    font-weight: bold;
+}
+
+.login {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .login {
+        position: static;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.login button {
+    background: #282A3A;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: 0;
+    cursor: pointer;
+    font-family: Fredoka;
+    font-size: 18pt;
+}
+
+.login button.disabled {
+    color: #757575;
+}
+
+
+
