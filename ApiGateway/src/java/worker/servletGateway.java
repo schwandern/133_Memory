@@ -38,6 +38,7 @@ public class servletGateway extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/json;charset=UTF-8");
         response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
 
         String requestType = new String(request.getParameter("type"));
 
@@ -97,7 +98,7 @@ public class servletGateway extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.addHeader("Access-Control-Allow-Origin", "*");
+         //response.addHeader("Access-Control-Allow-Origin", "*");
         processRequest(request, response);
        
     }
@@ -114,7 +115,7 @@ public class servletGateway extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        //response.addHeader("Access-Control-Allow-Origin", "*");
 
     }
 

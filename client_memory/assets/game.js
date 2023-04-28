@@ -155,7 +155,7 @@ function chargerClassementSuccess(data, text, jqXHR) {
     // Create the table element and its header row
     const table = document.createElement('table');
     const headerRow = document.createElement('tr');
-    const headers = ['ID', 'Score', 'Name', 'Rank'];
+    const headers = ['Score', 'Name'];
     headers.forEach(function(headerText) {
         const headerCell = document.createElement('th');
         headerCell.textContent = headerText;
@@ -163,21 +163,32 @@ function chargerClassementSuccess(data, text, jqXHR) {
     });
     table.appendChild(headerRow);
 
+    // Sort the data by score in descending order
+    data.sort(function(a, b) {
+        const scoreA = parseInt(a.split(', ')[1]);
+        const scoreB = parseInt(b.split(', ')[1]);
+        return scoreB - scoreA;
+    });
+
     // Populate the table with the data
     data.forEach(function(rowText) {
         const rowValues = rowText.split(', ');
+        const score = rowValues[1];
+        const name = rowValues[2];
         const row = document.createElement('tr');
-        rowValues.forEach(function(valueText) {
-            const cell = document.createElement('td');
-            cell.textContent = valueText;
-            row.appendChild(cell);
-        });
+        const scoreCell = document.createElement('td');
+        scoreCell.textContent = score;
+        const nameCell = document.createElement('td');
+        nameCell.textContent = name;
+        row.appendChild(scoreCell);
+        row.appendChild(nameCell);
         table.appendChild(row);
     });
 
     // Add the table to the DOM
     classement.appendChild(table);
 }
+
 
 
 function chargerClassementError(request, status, error) {
@@ -191,7 +202,7 @@ $(document).ready(function () {
 
     $.getScript("assets/servicesHttp.js", function () {
         console.log("servicesHttp.js chargé !");
-        chargerClassement(chargerClassementSuccess, chargerClassementSuccess);
+        chargerClassement(chargerClassementSuccess, chargerClassementError);
     });
 
 });
