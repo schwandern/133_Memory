@@ -64,38 +64,15 @@ public class WrkHTTP {
         while ((output = br.readLine()) != null) {
             responseFromServer += output;
 
-            conn.disconnect();
-
         }
+        conn.disconnect();
+
         return responseFromServer;
     }
 
-    public static String getUserByName(String name) throws IOException {
-        URL url = new URL("https://reyx.emf-informatique.ch/javaRest_Admin/db/getUser?name=" + name);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
-
-        if (conn.getResponseCode() != 200) {
-            throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-        }
-
-        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-        String output;
-        String json = "";
-        while ((output = br.readLine()) != null) {
-            json += output;
-        }
-
-        conn.disconnect();
-
-        return json;
-    }
-    
-    public String addUser(String name, String password) throws MalformedURLException, IOException {
-        String data = "&name=" + name + "&password=" + password;
-        URL url = new URL("https://reyx.emf-informatique.ch/javaRest_Admin/db/addUser");
+    public String getUserByName(String name) throws IOException {
+        String data = "&user=" + name;
+        URL url = new URL("https://reyx.emf-informatique.ch/javaRest_Admin/webresources/db/Getusers");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);
@@ -112,9 +89,34 @@ public class WrkHTTP {
         while ((output = br.readLine()) != null) {
             responseFromServer += output;
 
-            conn.disconnect();
+        }
+
+        conn.disconnect();
+        return responseFromServer;
+    }
+
+    public String addUser(String name, String password) throws MalformedURLException, IOException {
+        String data = "&name=" + name + "&password=" + password;
+        URL url = new URL("https://reyx.emf-informatique.ch/javaRest_Admin/webresources/db/Addusers");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+        OutputStream os = conn.getOutputStream();
+        os.write(data.getBytes());
+        os.flush();
+        os.close();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String output;
+        String responseFromServer = "";
+        while ((output = br.readLine()) != null) {
+            responseFromServer += output;
 
         }
+
+        conn.disconnect();
         return responseFromServer;
     }
 

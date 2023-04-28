@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author schwandern
  */
 public class servletGateway extends HttpServlet {
-    
+
     WrkHTTP wrk = new WrkHTTP();
 
     /**
@@ -37,12 +37,12 @@ public class servletGateway extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/json;charset=UTF-8");
+        response.addHeader("Access-Control-Allow-Origin", "*");
 
         String requestType = new String(request.getParameter("type"));
 
         if (requestType.equals("getclassement")) {
-            
-            // Write the JSON string to the response's output stream
+
             try ( PrintWriter out = response.getWriter()) {
                 out.print(wrk.getclassement());
                 out.flush();
@@ -53,20 +53,32 @@ public class servletGateway extends HttpServlet {
             String name = new String(request.getParameter("name"));
             String fk_user = new String(request.getParameter("fk_user"));
 
-            
-
-            try ( PrintWriter out = response.getWriter();) {
+            try ( PrintWriter out = response.getWriter()) {
                 out.print(wrk.addEntree(score, name, fk_user));
                 out.flush();
             }
 
-        } 
-        
-        
-        else {
+        }
+        if (requestType.equals("getUser")) {
+            String nom = new String(request.getParameter("user"));
+
+            try ( PrintWriter out = response.getWriter()) {
+                out.print(wrk.getUserByName(nom));
+                out.flush();
+            }
+        }
+        if (requestType.equals("Adduser")) {
+            String nom = new String(request.getParameter("user"));
+            String password = new String(request.getParameter("password"));
+
+            try ( PrintWriter out = response.getWriter()) {
+                out.print(wrk.addUser(nom, password));
+                out.flush();
+            }
+        } else {
             try ( PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
-                out.print("pas de type de Rquête avec le nom " + requestType);
+                out.print("pas de type de Rquête avec le nom ''" + requestType + "'' ");
                 out.flush();
             }
         }
@@ -85,7 +97,9 @@ public class servletGateway extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         response.addHeader("Access-Control-Allow-Origin", "*");
         processRequest(request, response);
+       
     }
 
     /**
@@ -100,6 +114,8 @@ public class servletGateway extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
     }
 
     /**

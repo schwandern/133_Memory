@@ -146,3 +146,52 @@ const attachEventListeners = () => {
 
 generateGame()
 attachEventListeners()
+
+function chargerClassementSuccess(data, text, jqXHR) {
+    const classement = document.getElementById('classement');
+    classement.innerHTML = '';
+    console.log(data);
+
+    // Create the table element and its header row
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
+    const headers = ['ID', 'Score', 'Name', 'Rank'];
+    headers.forEach(function(headerText) {
+        const headerCell = document.createElement('th');
+        headerCell.textContent = headerText;
+        headerRow.appendChild(headerCell);
+    });
+    table.appendChild(headerRow);
+
+    // Populate the table with the data
+    data.forEach(function(rowText) {
+        const rowValues = rowText.split(', ');
+        const row = document.createElement('tr');
+        rowValues.forEach(function(valueText) {
+            const cell = document.createElement('td');
+            cell.textContent = valueText;
+            row.appendChild(cell);
+        });
+        table.appendChild(row);
+    });
+
+    // Add the table to the DOM
+    classement.appendChild(table);
+}
+
+
+function chargerClassementError(request, status, error) {
+    alert("erreur : " + error + ", request: " + request + ", status: " + status);
+}
+
+
+
+
+$(document).ready(function () {
+
+    $.getScript("assets/servicesHttp.js", function () {
+        console.log("servicesHttp.js chargé !");
+        chargerClassement(chargerClassementSuccess, chargerClassementSuccess);
+    });
+
+});
