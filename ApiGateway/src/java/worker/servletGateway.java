@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author schwandern
  */
 public class servletGateway extends HttpServlet {
+    
+    WrkHTTP wrk = new WrkHTTP();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,29 +41,10 @@ public class servletGateway extends HttpServlet {
         String requestType = new String(request.getParameter("type"));
 
         if (requestType.equals("getclassement")) {
-            URL url = new URL("https://schwandern.emf-informatique.ch/java-Rest_Classement/webresources/db/getClassement");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String output;
-            String json = "";
-            while ((output = br.readLine()) != null) {
-                json += output;
-            }
-
-            conn.disconnect();
-
+            
             // Write the JSON string to the response's output stream
             try ( PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.print(json);
+                out.print(wrk.getclassement());
                 out.flush();
             }
         }
@@ -70,31 +53,17 @@ public class servletGateway extends HttpServlet {
             String name = new String(request.getParameter("name"));
             String fk_user = new String(request.getParameter("fk_user"));
 
-            String data = "score="+score+"&name="+name+"&fk_user="+fk_user;
-            URL url = new URL("https://schwandern.emf-informatique.ch/java-Rest_Classement/webresources/db/addEntree");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            
 
-            OutputStream os = conn.getOutputStream();
-            os.write(data.getBytes());
-            os.flush();
-            os.close();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String output;
-            String responseFromServer = "";
-            while ((output = br.readLine()) != null) {
-                responseFromServer += output;
+            try ( PrintWriter out = response.getWriter();) {
+                out.print(wrk.addEntree(score, name, fk_user));
+                out.flush();
             }
 
-            conn.disconnect();
-
-            PrintWriter out = response.getWriter();
-            out.print(responseFromServer);
-            out.flush();
-        } else {
+        } 
+        
+        
+        else {
             try ( PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.print("pas de type de Rquête avec le nom " + requestType);
