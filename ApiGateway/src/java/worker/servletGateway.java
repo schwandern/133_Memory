@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,6 +41,9 @@ public class servletGateway extends HttpServlet {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Credentials", "true");
 
+        boolean logged = false;
+        String loggedName = null;
+
         String requestType = new String(request.getParameter("type"));
 
         if (requestType.equals("getclassement")) {
@@ -49,13 +53,11 @@ public class servletGateway extends HttpServlet {
                 out.flush();
             }
         }
-        if (requestType.equals("addEntree")) {
+        if (requestType.equals("addEntree") && (loggedName != null)) {
             String score = new String(request.getParameter("score"));
-            String name = new String(request.getParameter("name"));
-            String fk_user = new String(request.getParameter("fk_user"));
 
             try ( PrintWriter out = response.getWriter()) {
-                out.print(wrk.addEntree(score, name, fk_user));
+                out.print(wrk.addEntree(score, loggedName));
                 out.flush();
             }
 
@@ -74,6 +76,21 @@ public class servletGateway extends HttpServlet {
 
             try ( PrintWriter out = response.getWriter()) {
                 out.print(wrk.addUser(nom, password));
+                out.flush();
+            }
+        }
+        if (requestType.equals("checkLogin")) {
+            String nom = new String(request.getParameter("user"));
+            String password = new String(request.getParameter("password"));
+
+            try ( PrintWriter out = response.getWriter()) {
+                String s = wrk.checkLogin(nom, password);
+                if (s.equals("ok")) {
+                    logged = true;
+                    loggedName = nom;
+                    HttpSession session = request.getSession();
+                }
+                out.print(s);
                 out.flush();
             }
         } else {
@@ -98,9 +115,9 @@ public class servletGateway extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         //response.addHeader("Access-Control-Allow-Origin", "*");
+        //response.addHeader("Access-Control-Allow-Origin", "*");
         processRequest(request, response);
-       
+
     }
 
     /**

@@ -45,8 +45,8 @@ public class WrkHTTP {
         return json;
     }
 
-    public String addEntree(String score, String name, String fk_user) throws MalformedURLException, IOException {
-        String data = "score=" + score + "&name=" + name + "&fk_user=" + fk_user;
+    public String addEntree(String score, String name) throws MalformedURLException, IOException {
+        String data = "score=" + score + "&name=" + name;
         URL url = new URL("https://schwandern.emf-informatique.ch/java-Rest_Classement/webresources/db/addEntree");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
@@ -96,8 +96,33 @@ public class WrkHTTP {
     }
 
     public String addUser(String name, String password) throws MalformedURLException, IOException {
-        String data = "&name=" + name + "&password=" + password;
-        URL url = new URL("https://reyx.emf-informatique.ch/javaRest_Admin/webresources/db/Addusers");
+        String data = "&user=" + name + "&password=" + password;
+        URL url = new URL("https://reyx.emf-informatique.ch/javaRest_Admin02/webresources/db/Addusers");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+        OutputStream os = conn.getOutputStream();
+        os.write(data.getBytes());
+        os.flush();
+        os.close();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String output;
+        String responseFromServer = "";
+        while ((output = br.readLine()) != null) {
+            responseFromServer += output;
+
+        }
+
+        conn.disconnect();
+        return responseFromServer;
+    }
+    
+    public String checkLogin(String name, String password) throws MalformedURLException, IOException {
+        String data = "&user=" + name + "&password=" + password;
+        URL url = new URL("https://reyx.emf-informatique.ch/javaRest_Admin02/webresources/db/checkLogin");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);

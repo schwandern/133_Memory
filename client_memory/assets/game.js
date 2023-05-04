@@ -125,6 +125,8 @@ const flipCard = card => {
                     under <span class="highlight">${state.totalTime}</span> seconds
                 </span>
             `
+            score = calculateScore(state.totalTime,state.totalFlips)
+            sendScore("addEntree",score)
 
             clearInterval(state.loop)
         }, 1000)
@@ -170,8 +172,13 @@ function chargerClassementSuccess(data, text, jqXHR) {
         return scoreB - scoreA;
     });
 
-    // Populate the table with the data
+    // Populate the table with the data, only showing the first 10 rows
+    const rowLimit = 10;
+    let rowCount = 0;
     data.forEach(function(rowText) {
+        if (rowCount >= rowLimit) {
+            return;
+        }
         const rowValues = rowText.split(', ');
         const score = rowValues[1];
         const name = rowValues[2];
@@ -183,11 +190,15 @@ function chargerClassementSuccess(data, text, jqXHR) {
         row.appendChild(scoreCell);
         row.appendChild(nameCell);
         table.appendChild(row);
+        rowCount++;
     });
 
     // Add the table to the DOM
     classement.appendChild(table);
 }
+
+
+
 
 
 
@@ -197,12 +208,29 @@ function chargerClassementError(request, status, error) {
 
 
 
+function calculateScore(time, moves) {
+    // Assuming time is in seconds and moves is a positive integer
+    const timeScore = Math.max(10000 - (time * 100), 0); // Maximum score of 10000, deduct 100 points for each second taken
+    const movesScore = Math.max(10000 - (moves * 100), 0); // Maximum score of 10000, deduct 100 points for each move made
+    const totalScore = (timeScore + movesScore) / 2; // Average the two scores to get the final score
+    return Math.round(totalScore); // Round the score to the nearest integer
+}
+
+function sendScoreSuccess(response) {
+    console.log("Score sent successfully", response);
+}
+
+function sendScoreError(error) {
+    console.error("Error sending score", error);
+}
+
 
 $(document).ready(function () {
 
     $.getScript("assets/servicesHttp.js", function () {
         console.log("servicesHttp.js chargé !");
         chargerClassement(chargerClassementSuccess, chargerClassementError);
+        //sendScore("addEntree","60", sendScoreSuccess, sendScoreError);
     });
 
 });
