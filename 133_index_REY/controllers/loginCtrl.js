@@ -1,5 +1,6 @@
 const myButton = document.getElementById('login');
 myButton.addEventListener('click', function() {
+    console.log("mybutton");
     login(document.getElementById("user").value,document.getElementById("password").value, loginSuccess, loginError);
 
 });
@@ -26,7 +27,7 @@ function loginSuccess(data, text, jqXHR) {
 }
 
 $(document).ready(function () {
-    $.getScript("js/services/servicesHttp.js", function () {
+    $.getScript("./services/servicesHttp.js", function () {
         console.log("servicesHttp.js chargé !");
     });
 });

@@ -1,6 +1,6 @@
 const myButton = document.getElementById('signup');
 myButton.addEventListener('click', function() {
-    createAccount(document.getElementById("user").value,document.getElementById("passwd").value, signUpSuccess, signUpError)
+    addUser(document.getElementById("user").value,document.getElementById("password").value, signUpSuccess, signUpError)
 
 
 });
@@ -22,7 +22,7 @@ function signUpSuccess(data, text, jqXHR) {
 
 
 $(document).ready(function () {
-    $.getScript("js/services/servicesHttp.js", function () {
+    $.getScript("./services/servicesHttp.js", function () {
         console.log("servicesHttp.js chargé !");
 
     });
