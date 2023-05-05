@@ -38,11 +38,10 @@ public class servletGateway extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/json;charset=UTF-8");
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         response.addHeader("Access-Control-Allow-Credentials", "true");
 
-        boolean logged = false;
-        String loggedName = null;
+       
 
         String requestType = new String(request.getParameter("type"));
 
@@ -53,11 +52,13 @@ public class servletGateway extends HttpServlet {
                 out.flush();
             }
         }
-        if (requestType.equals("addEntree")) {
+        if (requestType.equals("addEntree") && (request.getSession().getAttribute("user")!=null)) {
             String score = new String(request.getParameter("score"));
+            
+            String s = (String) request.getSession().getAttribute("user");
 
             try ( PrintWriter out = response.getWriter()) {
-                out.print(wrk.addEntree(score, loggedName));
+                out.print(wrk.addEntree(score, s));
                 out.flush();
             }
 
@@ -82,16 +83,18 @@ public class servletGateway extends HttpServlet {
         if (requestType.equals("checkLogin")) {
             String nom = new String(request.getParameter("user"));
             String password = new String(request.getParameter("password"));
+            
+            HttpSession session = request.getSession();
 
             try ( PrintWriter out = response.getWriter()) {
                 String s = wrk.checkLogin(nom, password);
-                if (s.equals("ok")) {
-                    logged = true;
-                    loggedName = nom;
-                    HttpSession session = request.getSession();
+                if (s!=null) {
+                    
+                    request.getSession().setAttribute("user", nom);
                 }
                 out.print(s);
                 out.flush();
+                
             }
         } else {
             try ( PrintWriter out = response.getWriter()) {
