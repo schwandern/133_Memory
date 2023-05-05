@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        @font-face {
+            font-family: Fredoka;
+            src: url(./FredokaOne-Regular.ttf);
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(325deg,  #6f00fc 0%,#fc7900 50%,#fcc700 100%);
+            font-family: Fredoka;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #FFF;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgb(33 33 33 / 25%);
+            max-width: 300px;
+        }
+
+        .form-container h2 {
+            color: #282A3A;
+            font-size: 21pt;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="password"] {
+            background: #282A3A;
+            color: #FFF;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: 0;
+            cursor: pointer;
+            font-family: Fredoka;
+            font-size: 18pt;
+            margin-bottom: 20px;
+        }
+
+        .form-container button[type="submit"] {
+            background: #282A3A;
+            color: #FFF;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: 0;
+            cursor: pointer;
+            font-family: Fredoka;
+            font-size: 18pt;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Login</h2>
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<script type="text/javascript" src="http://localhost/client_memory/assets/helpers/jquery-1.10.2.min.js"></script>
+<script src="http://localhost/client_memory/assets/helpers/scripts.js"></script>
+<script src="http://localhost/client_memory/assets/servicesHttp.js"></script>
+<script src="assets/game.js" defer></script>
+
+
+</body>
+</html>

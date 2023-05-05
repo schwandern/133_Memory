@@ -53,7 +53,7 @@ public class servletGateway extends HttpServlet {
                 out.flush();
             }
         }
-        if (requestType.equals("addEntree") && (loggedName != null)) {
+        if (requestType.equals("addEntree")) {
             String score = new String(request.getParameter("score"));
 
             try ( PrintWriter out = response.getWriter()) {
