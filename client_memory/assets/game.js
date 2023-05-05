@@ -116,17 +116,20 @@ const flipCard = card => {
 
     // If there are no more cards that we can flip, we won the game
     if (!document.querySelectorAll('.card:not(.flipped)').length) {
+        score = calculateScore(state.totalTime,state.totalFlips)
         setTimeout(() => {
             selectors.boardContainer.classList.add('flipped')
             selectors.win.innerHTML = `
                 <span class="win-text">
                     You won!<br />
                     with <span class="highlight">${state.totalFlips}</span> moves<br />
-                    under <span class="highlight">${state.totalTime}</span> seconds
+                    under <span class="highlight">${state.totalTime}</span> seconds<br/>
+                    Your calculated scor is <span class="highlight">${score}</span>
                 </span>
             `
-            score = calculateScore(state.totalTime,state.totalFlips)
+            //score = calculateScore(state.totalTime,state.totalFlips)
             sendScore("addEntree",score)
+            chargerClassement(chargerClassementSuccess, chargerClassementError);
 
             clearInterval(state.loop)
         }, 1000)
@@ -157,7 +160,7 @@ function chargerClassementSuccess(data, text, jqXHR) {
     // Create the table element and its header row
     const table = document.createElement('table');
     const headerRow = document.createElement('tr');
-    const headers = ['Score', 'Name'];
+    const headers = ['#', 'Score', 'Name'];
     headers.forEach(function(headerText) {
         const headerCell = document.createElement('th');
         headerCell.textContent = headerText;
@@ -175,7 +178,7 @@ function chargerClassementSuccess(data, text, jqXHR) {
     // Populate the table with the data, only showing the first 10 rows
     const rowLimit = 10;
     let rowCount = 0;
-    data.forEach(function(rowText) {
+    data.forEach(function(rowText, index) {
         if (rowCount >= rowLimit) {
             return;
         }
@@ -183,10 +186,17 @@ function chargerClassementSuccess(data, text, jqXHR) {
         const score = rowValues[1];
         const name = rowValues[2];
         const row = document.createElement('tr');
+        const positionCell = document.createElement('td');
+        positionCell.textContent = `#${index+1}`;
         const scoreCell = document.createElement('td');
         scoreCell.textContent = score;
         const nameCell = document.createElement('td');
-        nameCell.textContent = name;
+        if (index === 0) {
+            nameCell.innerHTML = `&#x1f451; ${name}`;
+        } else {
+            nameCell.textContent = name;
+        }
+        row.appendChild(positionCell);
         row.appendChild(scoreCell);
         row.appendChild(nameCell);
         table.appendChild(row);
@@ -196,9 +206,6 @@ function chargerClassementSuccess(data, text, jqXHR) {
     // Add the table to the DOM
     classement.appendChild(table);
 }
-
-
-
 
 
 
