@@ -1,57 +1,39 @@
-var BASE_URL = "http://localhost:8080/Rest_Admin/";
 
-/*
-function login(user, password, loginSuccess, loginError) {
-    console.log("serviceHTTP login");
+function addUser(user, mdp, successCallback, errorCallback) {
     $.ajax({
         type: "POST",
-        dataType: "json",
-        data: { type:"checkLogin", user: user, password: password },
-        url: BASE_URL,
+        dataType: "text",
+        url: "https://schwandern.emf-informatique.ch/javaApiGateway/servletGateway",
+        data: {
+            type: "Adduser",
+            user: user,
+            password: mdp
+        },
         xhrFields: {
-            withCredentials: true,
+            withCredentials: true
         },
         async: false,
         crossDomain: true,
-        success: loginSuccess,
-        error: loginError
+        success: successCallback,
+        error: errorCallback
     });
-}
-*/
 
-function addUser(user, password, loginSuccess, loginError) {
-    console.log("serviceHTTP adduser");
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        data: { type:"AddUser", user: user, password: password },
-        url: BASE_URL,
-        xhrFields: {
-            withCredentials: true,
-        },
-        async: false,
-        crossDomain: true,
-        success: loginSuccess,
-        error: loginError
-    });
 }
 
 
-/*
-function getUser(user, password, loginSuccess, loginError) {
-    console.log("serviceHTTP adduser");
+function chercherUser(username ,successCallback, errorCallback) {
     $.ajax({
         type: "GET",
         dataType: "json",
-        data: { type:"AddUser", user: user, password: password },
-        url: BASE_URL,
+        url: "https://schwandern.emf-informatique.ch/javaApiGateway/servletGateway?type=getUser&user="+username,
+        success: function(response) {
+            successCallback(response.test);
+        },
         xhrFields: {
-            withCredentials: true,
+            withCredentials: true
         },
         async: false,
         crossDomain: true,
-        success: loginSuccess,
-        error: loginError
+        error: errorCallback
     });
 }
-*/

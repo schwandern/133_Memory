@@ -1,19 +1,32 @@
 const myButton = document.getElementById('adduser');
+const myButton2 = document.getElementById('recherche');
 myButton.addEventListener('click', function() {
-    addUser(document.getElementById("user").value,document.getElementById("password").value, signUpSuccess, signUpError)
-
+    addUser(document.getElementById("user").value,document.getElementById("password").value, successCallback, errorCallback)
 
 });
 
-function signUpError(request, status, error) {
+myButton2.addEventListener('click', function() {
+    chercherUser(document.getElementById("search").value, successCallback2, errorCallback2)
+
+});
+
+
+function errorCallback2(request, status, error) {
+    alert("Erreur lors de la recherche");
+}
+
+function successCallback2(data, text, jqXHR) {
+    console.log(data)
+}
+
+function errorCallback(request, status, error) {
     alert("Erreur lors de l'enregistrement");
 }
 
-function signUpSuccess(data, text, jqXHR) {
-    if ($(data).find("result").text() == 'true')
+function successCallback(data, text, jqXHR) {
+    if (data.includes("OK"))
     {
         alert("Sign-Up ok");
-        window.location.replace("login.html");
     }
     else{
         alert("Erreur lors de l'enregistrement");
@@ -26,6 +39,5 @@ $(document).ready(function () {
         console.log("servicesHttp.js chargé !");
 
     });
-
 
 });
