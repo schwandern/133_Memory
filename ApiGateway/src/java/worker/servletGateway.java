@@ -88,7 +88,7 @@ public class servletGateway extends HttpServlet {
 
             try ( PrintWriter out = response.getWriter()) {
                 String s = wrk.checkLogin(nom, password);
-                if (s!=null) {
+                if (s.equals("OK")) {
                     
                     request.getSession().setAttribute("user", nom);
                 }

@@ -17,6 +17,7 @@ function loginSuccess(data, text, jqXHR) {
 }
 
 
+
 $(document).ready(function () {
     $.getScript("assets/servicesHttp.js", function () {
         console.log("servicesHttp.js chargé !");
