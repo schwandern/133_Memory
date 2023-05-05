@@ -2,7 +2,7 @@ function chargerClassement(successCallback, errorCallback) {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://localhost:8080/ApiGateway/servletGateway?type=getclassement",
+        url: "https://schwandern.emf-informatique.ch/javaApiGateway/servletGateway?type=getclassement",
         success: function(response) {
             successCallback(response.test);
         },
@@ -21,7 +21,7 @@ function sendScore(type, score, successCallback, errorCallback) {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: "http://localhost:8080/ApiGateway/servletGateway",
+        url: "https://schwandern.emf-informatique.ch/javaApiGateway/servletGateway",
         data: {
             type: type,
             score: score
@@ -42,7 +42,7 @@ function connect(user, mdp, successCallback, errorCallback) {
     $.ajax({
         type: "POST",
         dataType: "text",
-        url: "http://localhost:8080/ApiGateway/servletGateway",
+        url: "https://schwandern.emf-informatique.ch/javaApiGateway/servletGateway",
         data: {
             type: "checkLogin",
             user: user,
