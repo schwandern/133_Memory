@@ -1,4 +1,4 @@
-const myButton = document.getElementById('signup');
+const myButton = document.getElementById('adduser');
 myButton.addEventListener('click', function() {
     addUser(document.getElementById("user").value,document.getElementById("password").value, signUpSuccess, signUpError)
 

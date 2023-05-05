@@ -1,5 +1,6 @@
 var BASE_URL = "http://localhost:8080/Rest_Admin/";
 
+/*
 function login(user, password, loginSuccess, loginError) {
     console.log("serviceHTTP login");
     $.ajax({
@@ -16,6 +17,7 @@ function login(user, password, loginSuccess, loginError) {
         error: loginError
     });
 }
+*/
 
 function addUser(user, password, loginSuccess, loginError) {
     console.log("serviceHTTP adduser");
@@ -33,3 +35,23 @@ function addUser(user, password, loginSuccess, loginError) {
         error: loginError
     });
 }
+
+
+/*
+function getUser(user, password, loginSuccess, loginError) {
+    console.log("serviceHTTP adduser");
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        data: { type:"AddUser", user: user, password: password },
+        url: BASE_URL,
+        xhrFields: {
+            withCredentials: true,
+        },
+        async: false,
+        crossDomain: true,
+        success: loginSuccess,
+        error: loginError
+    });
+}
+*/

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+	<title>Création et recherche d'user</title>
+</head>
+<body>
+	<h1>Créer un nouvel utilisateur</h1>
+	<form>
+		<label for="user">Nom d'utilisateur :</label>
+		<input type="text" id="user" name="user"><br><br>
+		<label for="password">Mot de passe :</label>
+		<input type="password" id="password" name="password"><br><br>
+		<input id="adduser" type="submit" value="Créer l'utilisateur">
+	</form>
+
+	<hr>
+
+	<h1>Rechercher un utilisateur</h1>
+	<form>
+		<label for="search">Rechercher :</label>
+		<input type="text" id="search" name="search"><br><br>
+		<input id="recherche" type="submit" value="Rechercher">
+	</form>
+
+    <div id="result"></div>
+
+    <script type="text/javascript" src="helpers/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="helpers/dateHelper.js"></script>
+<script type="text/javascript" src="controllers/userCtrl.js"></script>
+
+</body>
+</html>
