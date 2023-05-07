@@ -13,5 +13,11 @@ Pour que le score du memory soit enregisté dans le classement mondial il faut a
 
 lien pour créer un compte : https://reyx.emf-informatique.ch/133_User_REY/User.html
 
+COMPTE DE TEST :
+
+username : silvin
+
+mot de passe : uuuu
+
 Bonne chance !
 
